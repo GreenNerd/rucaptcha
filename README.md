@@ -35,9 +35,9 @@ Idea by: https://ruby-china.org/topics/20558#reply4
 #### Ubuntu
 
 ```bash
-sudo apt-get install imagemagick
+sudo apt-get install imagemagick ghostscript
 # or
-sudo apt-get install GraphicsMagick
+sudo apt-get install GraphicsMagick ghostscript
 ```
 
 #### Mac OS X
