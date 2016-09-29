@@ -16,5 +16,7 @@ module RuCaptcha
     attr_accessor :style
     # session[:_rucaptcha] expire time, default 2 minutes
     attr_accessor :expires_in
+    # Recognizable, default: :normal, allows: [:easy, :normal]
+    attr_accessor :recognizable
   end
 end

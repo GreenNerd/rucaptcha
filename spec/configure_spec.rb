@@ -8,6 +8,7 @@ describe RuCaptcha do
       expect(RuCaptcha.config.font_size).to eq(48)
       expect(RuCaptcha.config.implode).to eq(0.111)
       expect(RuCaptcha.config.expires_in).to eq(2.minutes)
+      expect(RuCaptcha.config.recognizable).to eq(:normal)
     end
   end
 end

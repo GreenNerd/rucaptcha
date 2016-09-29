@@ -72,11 +72,20 @@ module RuCaptcha
           line_opts << %(-draw 'stroke #{line_color} line #{rand(10)},#{left_y} #{right_x},#{right_y}')
         end
 
+        lines =
+          if RuCaptcha.config.recognizable == :easy
+            ''.freeze
+          else
+            <<-CODE
+              -strokewidth #{stroke_width}
+              #{line_opts.join(' ')}
+            CODE
+          end
+
         command = if RuCaptcha.config.image_processor == :image_magick
                     <<-CODE
                       convert -size #{size}
-                      -strokewidth #{stroke_width}
-                      #{line_opts.join(' ')}
+                      #{lines}
                       -pointsize #{font_size} -weight 500
                       #{text_opts.join(' ')}
                       -wave #{rand(2) + 3}x#{rand(2) + 1}
@@ -89,8 +98,7 @@ module RuCaptcha
                     <<-CODE
                       gm convert -size #{size}
                       -gravity NorthWest
-                      -strokewidth #{stroke_width}
-                      #{line_opts.join(' ')}
+                      #{lines}
                       -pointsize #{font_size}
                       -gravity NorthWest
                       #{text_opts.join(' ')}
