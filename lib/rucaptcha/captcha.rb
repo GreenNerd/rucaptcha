@@ -77,36 +77,36 @@ module RuCaptcha
         command =
           if RuCaptcha.config.image_processor == :image_magick
             <<-CODE
-              convert -size #{size} \
-              -strokewidth #{stroke_width} \
-              #{opts[:line].join(' ')} \
-              -pointsize #{RuCaptcha.config.font_size} -weight 500 \
-              #{opts[:text].join(' ')}  \
-              -wave #{rand(2) + 3}x#{rand(2) + 1} \
-              -rotate #{rand(10) - 5} \
-              -gravity NorthWest -sketch 1x10+#{rand(2)} \
-              -fill none \
+              convert -size #{size}
+              -strokewidth #{stroke_width}
+              #{opts[:line].join(' ')}
+              -pointsize #{RuCaptcha.config.font_size} -weight 500
+              #{opts[:text].join(' ')}
+              -wave #{rand(2) + 3}x#{rand(2) + 1}
+              -rotate #{rand(10) - 5}
+              -gravity NorthWest -sketch 1x10+#{rand(2)}
+              -fill none
               -implode #{RuCaptcha.config.implode} -trim label:- png:-
             CODE
           else
             <<-CODE
               gm convert -size #{size}
-              -gravity NorthWest \
-              -strokewidth #{stroke_width} \
-              #{opts[:line].join(' ')} \
+              -gravity NorthWest
+              -strokewidth #{stroke_width}
+              #{opts[:line].join(' ')}
               -pointsize #{RuCaptcha.config.font_size}
-              -gravity NorthWest \
-              #{opts[:text].join(' ')} \
-              -wave #{rand(2) + 3}x#{rand(2) + 1} \
-              -rotate #{rand(10) - 5} \
-              -spread #{1} \
-              -paint #{rand(10)/10.0} \
-              -fill none \
+              -gravity NorthWest
+              #{opts[:text].join(' ')}
+              -wave #{rand(2) + 3}x#{rand(2) + 1}
+              -rotate #{rand(10) - 5}
+              -spread #{1}
+              -paint #{rand(10)/10.0}
+              -fill none
               -implode #{RuCaptcha.config.implode} -trim label:- png:-
             CODE
           end
 
-        command.strip!
+        command.squish!
         out, err, _st = Open3.capture3(command)
         warn "  RuCaptcha #{err.strip}" if err.present?
         out
@@ -119,7 +119,7 @@ module RuCaptcha
         if RuCaptcha.config.image_processor == :image_magick
           command = "convert -size #{size} xc:White -gravity Center -weight 12 -pointsize 20 -annotate 0 \"#{code}\" -trim #{png_file_path}"
         else
-          command.squish!
+          command = "gm convert -size #{size} -gravity NorthWest -pointsize #{RuCaptcha.config.font_size} -gravity NorthWest -draw 'text 0,48 \"#{code}\"' -fill none -trim label:- png:- > #{png_file_path}"
         end
 
         _out, err, _st = Open3.capture3(command)
