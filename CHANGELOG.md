@@ -1,3 +1,29 @@
+1.1.4
+-----
+
+- Fix #35 just give a warning message if not setup a right cache_store, only raise on :null_store.
+
+1.1.2
+-----
+
+- Fix #34 rucaptcha.root_url -> root_path, to avoid generate a http url in a https application.
+- Fix spec to require Ruby 2.0.0, because there have a `Module#prepend` method called.
+
+1.1.1
+-----
+
+- Remove inspect log on verify_rucaptcha
+
+1.1.0
+-----
+
+- Add `cache_store` config key to setup a cache store location for RuCaptcha.
+- Store captcha in custom cache store.
+
+## Security Notes
+
+- Fix Session replay secure issue that when Rails application use CookieStore.
+
 1.0.0
 -----
 

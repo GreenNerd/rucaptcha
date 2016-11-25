@@ -13,6 +13,10 @@ module Rails
     def root
       Pathname.new(File.join(File.dirname(__FILE__), '..'))
     end
+
+    def cache
+      @cache ||= ActiveSupport::Cache::MemoryStore.new
+    end
   end
 end
 
@@ -20,4 +24,5 @@ RuCaptcha.configure do
   self.len       = 2
   self.font_size = 48
   self.implode   = 0.111
+  self.cache_store = :mem_cache_store
 end
